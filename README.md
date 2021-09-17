@@ -1,8 +1,11 @@
 # Visual Distractions & Adaptive Automation
 
-## Introduction
+## Introduction and motivation
 
 ## Related works
 
-## Ideas
+## Implementation
 
+## Experiment setup
+
+## Hypothesis
