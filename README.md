@@ -24,7 +24,7 @@ There are a number of design choices involved in this process. Below you will fi
 * How long will the model take over the driving?
   - At least a few seconds, to let the user get accustomed to the change. We will base this decision on testing.
 * How will the switch in control be communicated to the user?
-  - The dashboard will show the current mode of control at all times by means of two icons signifying user control and automated control. Whenever control switches one way or the other, the new icon will blink a few times on the road accompanied by a beeping sound. 
+  - The dashboard will show the current mode of control at all times by means of two icons signifying user control and automated control. Whenever control switches one way or the other, the new icon will blink a few times on the dashboard by a beeping sound. 
 * How long does the user have to look at the road to gain back control over the vehicle?
   - At least a few seconds. 
 
