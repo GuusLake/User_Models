@@ -26,15 +26,15 @@ Our experiment will measure if drivers are distracted and let the ACT-R model ta
 * A simple and boring distraction 
 * A more striking and exciting distraction
 
-We plan to do this by creating "bill boards" of a boring colour like gray and a more visually distracting like cyan.
+We plan to do this by creating "bill boards" of a boring colour like gray and a more visually distracting like cyan or with different lengths of text.
 
 Thus we let a participant drive for four sessions of about 5 minutes:
 
 * A practice session
-* A session with small disctractions
+* A session with small distractions
 * A session with large distractions
 * A session with mixed distractions
 
-Afterwards we can measure how often the system had to take over to determine how distracted our drivers. 
+Afterwards we can measure how often the system had to take over to determine how distracted our drivers were during the sessions. 
 
 ## Hypothesis
