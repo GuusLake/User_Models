@@ -115,7 +115,7 @@ public class Main extends JApplet {
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		if (!onMac()) // MacOS.start();
+		if (onMac()) // MacOS.start();
 		// else
 		{
 			SwingUtilities.invokeLater(new Runnable() {
