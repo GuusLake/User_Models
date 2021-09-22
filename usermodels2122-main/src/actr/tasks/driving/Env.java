@@ -17,6 +17,7 @@ public class Env {
 	Autocar autocar;
 	Speedsign speedsign;
 	Construction construction;
+	Billboard billboard;
 	int keypress;
 	boolean done;
 
@@ -46,6 +47,8 @@ public class Env {
 
 		construction = new Construction();
 
+		billboard = new Billboard();
+
 		done = false;
 	}
 
@@ -54,6 +57,7 @@ public class Env {
 		simcar.update(this);
 		autocar.update(this);
 		construction.update(this);
+		billboard.update(this);
 	}
 
 	void draw(Graphics g) {
@@ -68,8 +72,13 @@ public class Env {
 
 		road.draw(g, this);
 
-		if (speedsign.visible)
+		if (speedsign.visible) {
 			speedsign.drawSign(g, this);
+		}
+
+		if (billboard.visible) {
+			billboard.drawBoard(g, this);
+		}
 
 		if (world2image(autocar.p) != null) {
 			// order depends on where the cars are

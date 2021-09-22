@@ -236,7 +236,7 @@ public class Driving extends actr.task.Task {
 		Coordinate cs = null;
 		if (env.speedsign.signPos != null)
 			cs = env.world2image(env.speedsign.signPos);
-		if (getModel().getVision().visualObjects().contains("speedsign") == false && env.speedsign.newSign == true) {
+		if (!getModel().getVision().visualObjects().contains("speedsign") && env.speedsign.newSign) {
 			signLabel.setLocation(cs.x, cs.y);
 			env.speedsign.visible = true;
 			if (cs.d < 40) {
@@ -250,6 +250,22 @@ public class Driving extends actr.task.Task {
 		} else {
 			getModel().getVision().removeVisual("speedsign");
 			env.speedsign.visible = false;
+		}
+
+		// billboard
+		Coordinate cb = null;
+		if (env.billboard.boardPos != null)
+			cb = env.world2image(env.billboard.boardPos);
+		if (!getModel().getVision().visualObjects().contains("billboard") && env.billboard.newBoard) {
+			env.billboard.visible = true;
+			if (cb.d < 40) {
+				getModel().getVision().addVisual("billboard", "billboard", "boring", cb.x, cb.y, 1, 1,
+						cb.d);
+				env.billboard.newBoard = false;
+			}
+		} else {
+			getModel().getVision().removeVisual("billboard");
+			env.billboard.visible = false;
 		}
 
 		// autocar
