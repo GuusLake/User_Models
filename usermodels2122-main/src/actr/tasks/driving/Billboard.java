@@ -4,10 +4,11 @@ import java.awt.*;
 
 public class Billboard {
     final boolean INTERESTING = false;
-    final double WIDTH = 1;
-    final double HEIGHT = 1.6;
+    final double WIDTH = 2.5;
+    final double HEIGHT = 2;
     final double START_X = 1.28;
-    String boardText = "yooooo";
+    String boardText1 = "This hardly fits";
+    String boardText2 = "anything";
     double boardOnSet = 0;
     Position boardPos;
     double boardFrac;
@@ -52,21 +53,31 @@ public class Billboard {
         int imWidth = im2.x - im1.x;
         int imHeight = im1.y - im2.y;
         g.fillRect(im1.x, im2.y, imWidth, imHeight);
-//        System.out.println("x1: " + im1.x + "\t y1: " + im1.y + "\tx2: " + im2.x + "\t y2: " + im2.y);
 
-        // text
-        int fontSize = 12;
-        Font f = new Font("SANS_SERIF",  Font.BOLD, fontSize);
+        drawText(g, im1.x, im2.y, imWidth, imHeight);
+    }
+
+    void drawText(Graphics g, int boardX, int boardY, int boardWidth, int boardHeight) {
+        int fontSize = 15;
+        Font f = new Font("MONOSPACED", Font.BOLD, fontSize);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
-        g.setColor(Color.black);
-
-        int textX = im1.x + (imWidth - fm.stringWidth(boardText)) / 2;
-        int textY = im2.y + ((imHeight - fm.getHeight()) / 2) + fm.getAscent();
-
+        while (fm.stringWidth(boardText1) > boardWidth) {
+            fontSize--;
+            f = f.deriveFont((float)fontSize);
+            g.setFont(f);
+            fm = g.getFontMetrics();
+        }
+        System.out.println(fontSize);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.black);
-        g2d.drawString(boardText, textX, textY); // bit off center
+
+        int textX = boardX + (boardWidth - fm.stringWidth(boardText1)) / 2;
+        int textY = boardY + ((boardHeight - fm.getHeight()*2) / 2) + fm.getAscent();
+        g2d.drawString(boardText1, textX, textY);
+        textX = boardX + (boardWidth - fm.stringWidth(boardText2)) / 2;
+        textY += fm.getHeight();
+        g2d.drawString(boardText2, textX, textY);
     }
 
 }
