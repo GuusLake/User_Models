@@ -3,13 +3,12 @@ package actr.tasks.driving;
 import java.awt.*;
 
 public class Billboard {
-    final boolean INTERESTING = false;
+    final boolean INTERESTING = true;
     final double WIDTH = 2.5;
     final double HEIGHT = 2;
     final double START_X = 1.28;
-    String boardText1 = "This hardly fits";
-    String boardText2 = "anything";
     double boardOnSet = 0;
+    int boardNumber = 0;
     Position boardPos;
     double boardFrac;
     boolean visible = false;
@@ -53,12 +52,16 @@ public class Billboard {
         int imWidth = im2.x - im1.x;
         int imHeight = im1.y - im2.y;
         g.fillRect(im1.x, im2.y, imWidth, imHeight);
-
-        drawText(g, im1.x, im2.y, imWidth, imHeight);
+        if (INTERESTING) {
+            drawText(g, im1.x, im2.y, imWidth, imHeight);
+        }
     }
 
     void drawText(Graphics g, int boardX, int boardY, int boardWidth, int boardHeight) {
-        int fontSize = 50;
+        String boardText1 = BillboardContent.getBillboardText(boardNumber);
+        String boardText2 = BillboardContent.getBillboardText(boardNumber+1);
+
+        int fontSize = 60;
         Font f = new Font("MONOSPACED", Font.BOLD, fontSize);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
