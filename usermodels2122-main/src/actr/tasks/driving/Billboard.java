@@ -18,7 +18,7 @@ public class Billboard {
     void update(Env env) {
         double time = env.time;
 //        if (time >= 5) {
-            if ((int) (time + 3) % 10 == 0 && !visible) {
+            if ((int) (time + 3) % 7 == 0 && !visible) {
                 newBoard(env);
                 newBoard = true;
             }
@@ -46,7 +46,7 @@ public class Billboard {
         Coordinate im1 = env.world2image(pos1);
 
         Position pos2 = Road.location(boardFrac, env.road.lanes + START_X + WIDTH);
-        pos2.y = HEIGHT; // For reference: A car is 1 unit tall.
+        pos2.y = HEIGHT;
         Coordinate im2 = env.world2image(pos2);
 
         g.setColor(Color.GRAY);
@@ -58,7 +58,7 @@ public class Billboard {
     }
 
     void drawText(Graphics g, int boardX, int boardY, int boardWidth, int boardHeight) {
-        int fontSize = 15;
+        int fontSize = 50;
         Font f = new Font("MONOSPACED", Font.BOLD, fontSize);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
@@ -68,7 +68,6 @@ public class Billboard {
             g.setFont(f);
             fm = g.getFontMetrics();
         }
-        System.out.println(fontSize);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.black);
 

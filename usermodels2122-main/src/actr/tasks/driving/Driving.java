@@ -263,6 +263,8 @@ public class Driving extends actr.task.Task {
 						cb.d);
 				env.billboard.newBoard = false;
 			}
+		} else if (cb != null) {
+			getModel().getVision().moveVisual("billboard", cb.x, cb.y);
 		} else {
 			getModel().getVision().removeVisual("billboard");
 			env.billboard.visible = false;
