@@ -5,7 +5,7 @@ import java.awt.*;
 public class Billboard {
     final boolean INTERESTING = true;
     final double WIDTH = 2.5;
-    final double HEIGHT = 2;
+    final double HEIGHT = 2.5;
     final double START_X = 1.28;
     double boardOnSet = 0;
     Position boardPos;
@@ -64,12 +64,14 @@ public class Billboard {
 
     void drawText(Graphics g, int boardX, int boardY, int boardWidth, int boardHeight) {
         int fontSize = 60;
-        String boardText1 = BillboardText.getBoard(boardNumber)[0];
-        String boardText2 = BillboardText.getBoard(boardNumber)[1];
+        String line1 = BillboardText.getBoard(boardNumber)[0];
+        String line2 = BillboardText.getBoard(boardNumber)[1];
         Font f = new Font("MONOSPACED", Font.BOLD, fontSize);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
-        while (fm.stringWidth(boardText1) > boardWidth) {
+        String largestText = (line1.length() > line2.length() ? line1 : line2);
+        while ((fm.stringWidth(largestText) > boardWidth) || 
+               (fm.getHeight()*2 > boardHeight)) {
             fontSize--;
             f = f.deriveFont((float)fontSize);
             g.setFont(f);
@@ -78,12 +80,12 @@ public class Billboard {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.black);
 
-        int textX = boardX + (boardWidth - fm.stringWidth(boardText1)) / 2;
+        int textX = boardX + (boardWidth - fm.stringWidth(line1)) / 2;
         int textY = boardY + ((boardHeight - fm.getHeight()*2) / 2) + fm.getAscent();
-        g2d.drawString(boardText1, textX, textY);
-        textX = boardX + (boardWidth - fm.stringWidth(boardText2)) / 2;
+        g2d.drawString(line1, textX, textY);
+        textX = boardX + (boardWidth - fm.stringWidth(line2)) / 2;
         textY += fm.getHeight();
-        g2d.drawString(boardText2, textX, textY);
+        g2d.drawString(line2, textX, textY);
     }
 
 }
