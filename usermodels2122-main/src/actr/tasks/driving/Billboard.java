@@ -7,18 +7,22 @@ public class Billboard {
     final double WIDTH = 2.5;
     final double HEIGHT = 2;
     final double START_X = 1.28;
-    String boardText1 = "This hardly fits";
-    String boardText2 = "anything";
     double boardOnSet = 0;
     Position boardPos;
     double boardFrac;
     boolean visible = false;
     boolean newBoard = false;
+    int boardNumber = 0;
+
+    public Billboard() {
+        BillboardText.initialize();
+    }
 
     void update(Env env) {
         double time = env.time;
 //        if (time >= 5) {
-            if ((int) (time + 3) % 10 == 0 && !visible) {
+            if ((int) (time + 3) % 7 == 0 && !visible) {
+                boardNumber++;
                 newBoard(env);
                 newBoard = true;
             }
@@ -53,12 +57,15 @@ public class Billboard {
         int imWidth = im2.x - im1.x;
         int imHeight = im1.y - im2.y;
         g.fillRect(im1.x, im2.y, imWidth, imHeight);
-
-        drawText(g, im1.x, im2.y, imWidth, imHeight);
+        if (INTERESTING) {
+            drawText(g, im1.x, im2.y, imWidth, imHeight);
+        }
     }
 
     void drawText(Graphics g, int boardX, int boardY, int boardWidth, int boardHeight) {
-        int fontSize = 15;
+        int fontSize = 60;
+        String boardText1 = BillboardText.getBoard(boardNumber)[0];
+        String boardText2 = BillboardText.getBoard(boardNumber)[1];
         Font f = new Font("MONOSPACED", Font.BOLD, fontSize);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics();
@@ -68,7 +75,6 @@ public class Billboard {
             g.setFont(f);
             fm = g.getFontMetrics();
         }
-        System.out.println(fontSize);
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(Color.black);
 
