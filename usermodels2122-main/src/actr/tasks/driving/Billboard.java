@@ -3,7 +3,7 @@ package actr.tasks.driving;
 import java.awt.*;
 
 public class Billboard {
-    final boolean INTERESTING = false;
+    final boolean INTERESTING = true;
     final double WIDTH = 2.5;
     final double HEIGHT = 2;
     final double START_X = 1.28;
@@ -50,7 +50,7 @@ public class Billboard {
         Coordinate im1 = env.world2image(pos1);
 
         Position pos2 = Road.location(boardFrac, env.road.lanes + START_X + WIDTH);
-        pos2.y = HEIGHT; // For reference: A car is 1 unit tall.
+        pos2.y = HEIGHT;
         Coordinate im2 = env.world2image(pos2);
 
         g.setColor(Color.GRAY);
