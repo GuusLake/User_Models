@@ -20,7 +20,7 @@ There are a number of design choices involved in this process. Below you will fi
 * How large are the billboards?
   - We will base this decision on testing.
 * How long does the user have to look at the billboards for it to count as a distraction?
-  - We will base this decision on literature.
+  - We will base this decision on literature. In the literature, we see visual distraction mainly measured as "Time eyes away from forward road". Then there are two different measures available: Either the longest glance away from the forward road, or the total time the eyes are away from forward road within a certain interval. The main values for these measures that are used in the literature to classify visual distraction are around 1.5s for the longest glance away from forward road, and 2s total eyes of forward road within a 5s interval. Whether these values are accurate for our system obviously needs testing.
 * How long will the model take over the driving?
   - At least a few seconds, to let the user get accustomed to the change. We will base this decision on testing.
 * How will the switch in control be communicated to the user?
@@ -34,11 +34,11 @@ These choices are of great importance to the functioning of the system and to us
 In our experiments, participants have to perform the 0-back task on the straight highway. They will drive for four sessions of 5 minutes:
 
 * A practice session
+* A session with no distractions
 * A session with light distractions
 * A session with heavy distractions
-* A session with mixed distractions
 
-We will record how often the system had to take over to determine how distracted our drivers were during the sessions. Furthermore, we will measure speed-keeping performance and investigate whether it is impacted by distraction. Finally, we will examine user experience by means of a very simple questionnaire.
+The sessions (except of course the practice session) will be randomised in order to account for bias. We will record how often the system had to take over to determine how distracted our drivers were during the sessions. Furthermore, we will measure speed-keeping performance and investigate whether it is impacted by distraction. Finally, we will examine user experience by means of a very simple questionnaire.
 
 ## Related works
 Distractions have always been a key contributor in traffic accidents. A study in the area of Washington D. C. suggests that 78% of all traffic accidents and near-accidents was directly preceded by some moment of inattention (Klauer et al., 2005). There are three major types of driver distraction defined: Visual distraction, manual distraction and cognitive distraction (Liang & Lee, 2008). Visual distraction includes any movement of the eyes from the road. Manual distractions are physical, e.g. letting one hand of the steering wheel to change the radio volume. Both visual and manual distraction are therefore prominent in the external behavior of the driver. Cognitive distraction, contrarily, is any distraction that happens within the mind of the driver. Cognitive distractions are therefore not visible from the outside, but nonetheless just as dangerous as visual and manual distraction. Our implementation of the adaptive driving algorithm wil focus entirely on visual distractions.
