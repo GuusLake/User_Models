@@ -26,7 +26,7 @@ There are a number of design choices involved in this process. Below you will fi
 * How will the switch in control be communicated to the user?
   - The dashboard will show the current mode of control at all times by means of two icons signifying user control and automated control. Whenever control switches one way or the other, the new icon will blink a few times on the dashboard by a beeping sound. 
 * How long does the user have to look at the road to gain back control over the vehicle?
-  - At least a few seconds. 
+  - At least a few seconds. It is relevant to mention that in the basis, we want the driver to have control over the vehicle. To prevent the driver from zoning out completely once control is taken over, we will attend the driver after a certain interval that control will be given back. And when the driver is indeed focussing on the road again, control can be handed back over.
 
 These choices are of great importance to the functioning of the system and to user satisfaction. We will base our final choices both on literature and on our testing of the system.
 
