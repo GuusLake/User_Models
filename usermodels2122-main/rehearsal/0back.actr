@@ -1229,273 +1229,41 @@
 
 ;----------------- NBACK -----------------
 
-;nback and rehearsal are split in two parts:
-;part 1 (*): build list until n speed signs have been passed
-;part 2: perform n-back task
-
-(p nback-memorise-sign*
-        ;building the initial list
-    =goal>
-        isa nback
-        num =placeholder
-        < num 2
-    =visual>
-        isa speedsign
-        value =slimit
-    ?retrieval>
-        buffer empty
-==>
-    !bind! =cid (get-chunk-id)
-    !bind! =num (get-num-sign)
-    !bind! =nr (reset-rehearsal)
-    =goal>
-        isa nback
-        status notice
-        nr =nr
-        num =num
-        rehearsal t
-    =imaginal>
-        isa nback-state
-        id =cid
-        slimit =slimit
-    -imaginal>
-    +imaginal>
-        isa nback-state
-        1back =cid
-        nbackspeed =slimit ;perform 0-back until enough signs have been passed
-)
-
-(p nback-memorise-sign
+(p follow-0back
     =goal>
         isa nback
         status read-nback
-        >= num 2
     =visual>
         isa speedsign
-        value =slimit
+        value =tlimit
     =imaginal>
         isa nback-state
-        1back =1back
-==>
-    !bind! =cid (get-chunk-id)
-    !bind! =nr (reset-rehearsal)
-    !bind! =num (get-num-sign)
-    =goal>
-        status remember1
-        nr =nr
-        num =num
-    =imaginal>
-        id =cid
-        slimit =slimit
-    +retrieval>
-        isa nback-state
-        id =1back
-)
-
-(p nback-remember-sign-1back
-    =goal>
-        isa nback
-        status remember1
-    =retrieval>
-        isa nback-state
-        1back =1back
-==>
-    =goal>
-        status remember2
-    +retrieval>
-        isa nback-state
-        id =1back
-)
-
-(p nback-remember-sign-2back
-    =goal>
-        isa nback
-        status remember2
-    =retrieval>
-        isa nback-state
-        slimit =nbackspeed
-    =imaginal>
-        id =1back
-==>
-    =goal>
-        status notice
-        rehearsal t
-    -imaginal>
-    +imaginal>
-        isa nback-state
-        1back =1back
-        nbackspeed =nbackspeed
-)
-
-(p nback-retrieval-failure
-    =goal>
-        isa nback
-        - status notice
-        - status read-nback
     ?retrieval>
-        state error
-==>
-    =goal>
-        status notice
-        rehearsal f
-)
-
-;----------------- REHEARSAL* -----------------
-
-(p nback-rehearse-sign0*
-    =goal>
-        isa nback
-        status rehearse0
-        <= num 1
-    =retrieval>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
         buffer empty
 ==>
-    =goal>
-        status notice
-    =retrieval>
-    -retrieval>
-)
-
-(p nback-rehearse-sign1*
-    =goal>
-        isa nback
-        status rehearse1
-        <= num 2
-    =retrieval>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
-        buffer empty
-==>
-    =goal>
-        status notice
-    =retrieval>
-    -retrieval>
-)
-
-;----------------- REHEARSAL -----------------
-
-(p nback-start-rehearsal
-    =goal>
-        isa nback
-        status notice
-        rehearsal t
-        < nr 3
-        >= num 1
     =imaginal>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
-        buffer empty
-==>
-    !bind! =nr (get-num-rehearsal)
-    =goal>
-        status rehearse0
-        nr =nr
-    =imaginal>
-    +retrieval>
-        isa nback-state
-        id =1back
-)
-
-(p nback-rehearse-sign0
+        nbackspeed =tlimit
     =goal>
         isa nback
-        status rehearse0
-        > num 1
-    =retrieval>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
-        buffer empty
-==>
-    =goal>
-        status rehearse1
-    +retrieval>
-        isa nback-state
-        id =1back    
-)
-
-(p nback-rehearse-sign1
-    =goal>
-        isa nback
-        status rehearse1
-        > num 2
-    =retrieval>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
-        buffer empty
-==>
-    =goal>
-        status rehearse2
-    +retrieval>
-        isa nback-state
-        id =1back
-)
-
-(p nback-rehearse-sign2
-    =goal>
-        isa nback
-        status rehearse2
-        >= num 3
-    =retrieval>
-        isa nback-state
-        1back =1back
-    ?visual-location>
-        - state error
-        - buffer requested
-        buffer empty
-==>
-    =goal>
         status notice
-    =retrieval>
-    -retrieval>
 )
 
-(p nback-interrupt-rehearsing-notice-sign
-    =goal>
-        isa nback
-        - status notice  
-    =visual-location>
-        isa visual-location
-        kind speedsign
-        :attended t
-==>
-    =goal>
-        status read-nback   
-        rehearsal f
-    -visual-location>
-    +visual>
-        isa move-attention
-        screen-pos =visual-location
-)
+(goal-focus goal1)
+(goal-focus goal2)
 
 (set-similarities
-    
-    (20 20 0) (20 40 -0.1) (20 60 -0.2) (20 80 -0.4) (20 100 -0.8) 
-    (40 20 -0.1) (40 40 0) (40 60 -0.1) (40 80 -0.2) (40 100 -0.4) (40 120 -0.8) 
+
+    (20 20 0) (20 40 -0.1) (20 60 -0.2) (20 80 -0.4) (20 100 -0.8)
+    (40 20 -0.1) (40 40 0) (40 60 -0.1) (40 80 -0.2) (40 100 -0.4) (40 120 -0.8)
     (60 20 -0.2) (60 40 -0.1) (60 60 0) (60 80 -0.1) (60 100 -0.2) (60 120 -0.4) (60 140 -0.8)
     (80 20 -0.4) (80 40 -0.2) (80 60 -0.1) (80 80 0) (80 100 -0.1) (80 120 -0.2) (80 140 -0.4) (80 160 -0.8)
     (100 20 -0.8) (100 40 -0.4) (100 60 -0.2) (100 80 -0.1) (100 100 0) (100 120 -0.1) (100 140 -0.2) (100 160 -0.4) (100 180 -0.8)
-    (120 40 -0.8) (120 60 -0.4) (120 80 -0.2) (120 100 -0.1) (120 120 0) (120 140 -0.1) (120 160 -0.2) (120 180 -0.4) 
+    (120 40 -0.8) (120 60 -0.4) (120 80 -0.2) (120 100 -0.1) (120 120 0) (120 140 -0.1) (120 160 -0.2) (120 180 -0.4)
     (140 60 -0.8) (140 80 -0.4) (140 100 -0.2) (140 120 -0.1) (140 140 0) (140 160 -0.1) (140 180 -0.2)
     (160 80 -0.8) (160 100 -0.4) (160 120 -0.2) (160 140 -0.1) (160 160 0) (160 180 -0.1)
-    (180 100 -0.8) (180 120 -0.4) (180 140 -0.2) (180 160 -0.1) (180 180 0) 
+    (180 100 -0.8) (180 120 -0.4) (180 140 -0.2) (180 160 -0.1) (180 180 0)
 )
+
 
 (goal-focus goal1)
 (goal-focus goal2)
