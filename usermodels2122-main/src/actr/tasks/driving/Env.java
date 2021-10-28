@@ -1,7 +1,9 @@
 package actr.tasks.driving;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import actr.env.Frame;
+import actr.env.Main;
+
+import java.awt.*;
 
 /**
  * The main driving environment that includes all other components of the
@@ -24,12 +26,9 @@ public class Env {
 	double time = 0;
 	static final double sampleTime = .050;
 
-	static final int envWidth = 640;
-	static final int envHeight = 360; // 444; // 360;
+	static final int envWidth = Frame.screenSize.width;
+	static final int envHeight = Frame.screenSize.height; // 444; // 360;
 	static final int heightAdjust = 50;
-
-	static final int simWidth = 640; // 1440; // 640;
-	static final int simHeight = 1000; // 1000; // 360;
 
 	Env(Driver driver, Scenario s) {
 		scenario = s;
@@ -79,6 +78,9 @@ public class Env {
 		if (billboard.visible) {
 			billboard.drawBoard(g, this);
 		}
+
+
+
 
 		if (world2image(autocar.p) != null) {
 			// order depends on where the cars are

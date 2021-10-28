@@ -31,6 +31,8 @@ public class Frame extends JFrame {
 	private Menus menus;
 	private Toolbar toolbar;
 
+	public static Dimension screenSize;
+
 	private File file;
 	private Model model;
 	private boolean stop;
@@ -44,6 +46,7 @@ public class Frame extends JFrame {
 	Frame(final Core core, File file) {
 		super("ACT-R");
 		frame = this;
+		screenSize = new Dimension(1920,1080);
 
 		this.core = core;
 
@@ -55,8 +58,10 @@ public class Frame extends JFrame {
 		JScrollPane editorScroll = new JScrollPane(editor);
 		editorScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		editorScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		editorScroll.setVisible(false);
 
 		navigator = new Navigator(this);
+		navigator.setVisible(false);
 
 		editorFind = new FindPanel(this, true);
 		editorFind.setVisible(false);
@@ -65,11 +70,13 @@ public class Frame extends JFrame {
 		modelSubPanel.setLayout(new BorderLayout(6, 6));
 		modelSubPanel.add(editorScroll, BorderLayout.CENTER);
 		modelSubPanel.add(editorFind, BorderLayout.SOUTH);
+		modelSubPanel.setVisible(false);
 
 		JPanel modelPanel = new JPanel();
 		modelPanel.setLayout(new BorderLayout(6, 6));
 		modelPanel.add(modelSubPanel, BorderLayout.CENTER);
 		modelPanel.add(navigator, BorderLayout.SOUTH);
+		modelPanel.setVisible(false);
 
 		outputArea = new JTextArea();
 		outputArea.setFont(new Font("Consolas", Font.PLAIN, 12)); // "Monaco"
@@ -84,10 +91,12 @@ public class Frame extends JFrame {
 				update();
 			}
 		});
+		outputArea.setVisible(false);
 
 		JScrollPane outputScroll = new JScrollPane(outputArea);
 		outputScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		outputScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		outputScroll.setVisible(false);
 
 		outputFind = new FindPanel(this, false);
 		outputFind.setVisible(false);
@@ -152,6 +161,9 @@ public class Frame extends JFrame {
 
 		pack();
 		setSize(core.getPreferences().frameWidth, core.getPreferences().frameHeight);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		setVisible(true);
 
 		splitPane.setDividerLocation(core.getPreferences().editorPaneSplit);
 		taskSplitPane.setDividerLocation(core.getPreferences().taskPaneSplit);

@@ -15,6 +15,8 @@ import javax.swing.*;
  * @author Dario Salvucci
  */
 public class Main extends JApplet {
+	public static boolean USER_DRIVES = false;
+
 	/** The application's version string. */
 	private static final String version = "1.1";
 

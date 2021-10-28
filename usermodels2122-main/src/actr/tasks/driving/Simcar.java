@@ -1,5 +1,7 @@
 package actr.tasks.driving;
 
+import actr.env.Main;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -135,9 +137,17 @@ public class Simcar extends Vehicle {
 				car_speed = 0.0;
 		}
 
-		car_steer = steerAngle;
-		car_accel_pedal = accelerator;
-		car_brake_pedal = brake;
+		Main.USER_DRIVES = ((int) time % 3 == 0);
+
+		if (Main.USER_DRIVES) {
+			car_steer = 0;
+			car_accel_pedal = 1;
+			car_brake_pedal = 0;
+		} else {
+			car_steer = steerAngle;
+			car_accel_pedal = accelerator;
+			car_brake_pedal = brake;
+		}
 
 		// original had lines below; changing to linear steering function
 		// if (car_steer < 0.0) car_deltaf = -0.0423 * Math.pow(-1.0*car_steer, 1.3);
@@ -217,51 +227,25 @@ public class Simcar extends Vehicle {
 	}
 
 	void draw(Graphics g, Env env) {
-		int dashHeight = 90; // default: 80
+		int dashHeight = (int) Math.rint(Env.envHeight * 0.35);
+
 		g.setColor(Color.black);
 		g.fillRect(0, Env.envHeight - dashHeight, Env.envWidth, dashHeight);
 
-		int steerX = 160;
-		int steerY = Env.envHeight - 20;
-		int steerR = 50;
-		g.setColor(Color.darkGray);
-		Graphics2D g2d = (Graphics2D) g;
-		AffineTransform saved = g2d.getTransform();
-		g2d.translate(steerX, steerY);
-		g2d.rotate(steerAngle);
-		g2d.setStroke(new BasicStroke(10));
-		g2d.drawOval(-steerR, -steerR, 2 * steerR, 2 * steerR);
-		g2d.fillOval(-steerR / 4, -steerR / 4, steerR / 2, steerR / 2);
-		g2d.drawLine(-steerR, 0, +steerR, 0);
-		g2d.setTransform(saved);
-
 		// mh - speedometer
+		int speedometer_x = (int) Math.rint(Env.envWidth * 0.40);
+		int speedometer_y = (int) Math.rint(Env.envHeight * 0.83);
+
 		double speedNum = speed;
 		String speed = Integer.toString((int) Utilities.mph2kph(Utilities.mps2mph(speedNum)));
 		Font myFont = new Font("Helvetica", Font.BOLD, 18);
 		g.setFont(myFont);
 		g.setColor(Color.WHITE);
-		g.drawString(speed, 260, 300);
 
-		// top - mirror
-		g.setColor(Color.black);
-		g.fillRoundRect(225, 15, 70, 30, 30, 20);
-		g.fillRect(255, 0, 10, 20);
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRoundRect(230, 20, 60, 20, 30, 20);
-		// g.fillRoundRect(5, Env.envHeight - dashHeight, 45, 25, 30, 20); side-view
+		g.drawString(speed, 200, 200);
 
-		// left-side mirror
-		g.setColor(Color.black);
-		g.fillRoundRect(5, Env.envHeight - dashHeight - 30, 60, 30, 40, 20);
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRoundRect(10, Env.envHeight - dashHeight - 25, 50, 20, 40, 20);
-
-		// right-side mirror
-		g.setColor(Color.black);
-		g.fillRoundRect(Env.envWidth - 65, Env.envHeight - dashHeight - 30, 60, 30, 40, 20);
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRoundRect(Env.envWidth - 60, Env.envHeight - dashHeight - 25, 50, 20, 40, 20);
+		// draw USER_DRIVES
+		g.drawString(String.valueOf(Main.USER_DRIVES), 20, 20);
 	}
 
 	double devscale = .0015;

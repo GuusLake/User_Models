@@ -20,7 +20,7 @@ public class Core {
 	private Frame runLock;
 	private JFrame invisibleFrame;
 
-	static String fileToOpen = null;
+	static String fileToOpen = "rehearsal/2back.actr";
 	static String starterClass = "actr.tasks.Starter";
 	String currentFile = null; // mlh
 
